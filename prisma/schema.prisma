@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum CareerPath {
+  CLOUD_ENGINEER
+  DEVOPS_ENGINEER
+  SECURITY_ENGINEER
+  SOLUTIONS_ARCHITECT
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+
+  profile   Profile?
+
+  createdAt DateTime @default(now())
+}
+
+model Profile {
+  id          String      @id @default(uuid())
+
+  level       Int         @default(1)
+  xp          Int         @default(0)
+
+  careerPath  CareerPath
+
+  userId      String      @unique
+  user        User        @relation(fields: [userId], references: [id])
+}
