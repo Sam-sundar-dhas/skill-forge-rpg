@@ -18,6 +18,9 @@ body {
     color-scheme: dark;
   }
 }
+html {
+  scroll-behavior: smooth;
+}
 
 @theme inline {
   --font-heading: var(--font-sans);
@@ -141,4 +144,42 @@ body {
   html {
     @apply font-sans;
   }
+}
+@keyframes skill-scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.skill-scroll {
+  display: flex;
+  width: max-content;
+  animation: skill-scroll 25s linear infinite;
+}
+
+.skill-scroll:hover {
+  animation-play-state: paused;
+}
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-up.show {
+  opacity: 1;
+  transform: translateY(0);
+}.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-up.show {
+  opacity: 1;
+  transform: translateY(0);
 }

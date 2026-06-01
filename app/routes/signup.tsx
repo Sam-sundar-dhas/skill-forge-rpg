@@ -1,4 +1,4 @@
-export default function Login() {
+export default function Signup() {
   return (
     <main className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
 
@@ -14,36 +14,36 @@ export default function Login() {
 
           <div className="max-w-lg">
 
-            <span className="rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-2 text-sm text-violet-300">
-              ⚔️ SkillForge
+            <span className="rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 text-sm text-cyan-300">
+              ⚔️ Join SkillForge
             </span>
 
             <h1 className="mt-8 text-6xl font-bold leading-tight text-white">
-              Begin Your
+              Start Your
               <span className="block bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
-                Cloud Adventure
+                Hero Journey
               </span>
             </h1>
 
             <p className="mt-6 text-lg text-slate-300">
-              Learn Linux, AWS, Docker, Kubernetes and DevOps
-              through quests, achievements and real-world
-              challenges.
+              Create your account and begin mastering Linux,
+              AWS, Docker, Kubernetes and DevOps through
+              quests, achievements and interactive learning.
             </p>
 
-            {/* Feature Cards */}
+            {/* Benefits */}
             <div className="mt-12 grid gap-4">
 
               <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 text-slate-200 backdrop-blur-sm">
-                ☁️ AWS Learning Paths
+                🎯 Personalized Learning Paths
               </div>
 
               <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 text-slate-200 backdrop-blur-sm">
-                🐳 Docker Challenges
+                🏆 Earn XP & Achievements
               </div>
 
               <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 text-slate-200 backdrop-blur-sm">
-                ⚙️ Kubernetes Missions
+                🚀 Build Real Cloud Projects
               </div>
 
             </div>
@@ -53,18 +53,18 @@ export default function Login() {
         </div>
 
         {/* Right Side */}
-        <div className="flex items-center justify-center px-6">
+        <div className="flex items-center justify-center px-6 py-10">
 
           <div className="w-full max-w-md rounded-3xl border border-slate-800 bg-slate-900/70 p-8 backdrop-blur-xl">
 
             <div className="text-center">
 
               <h2 className="text-4xl font-bold text-white">
-                Welcome Back
+                Create Account
               </h2>
 
               <p className="mt-3 text-slate-400">
-                Continue your cloud journey.
+                Begin your cloud adventure today.
               </p>
 
             </div>
@@ -73,7 +73,19 @@ export default function Login() {
 
               <input
                 type="text"
-                placeholder="Email or Username"
+                placeholder="Full Name"
+                className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-violet-500"
+              />
+
+              <input
+                type="email"
+                placeholder="Email Address"
+                className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-violet-500"
+              />
+
+              <input
+                type="text"
+                placeholder="Username"
                 className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-violet-500"
               />
 
@@ -83,16 +95,23 @@ export default function Login() {
                 className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-violet-500"
               />
 
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-violet-500"
+              />
+
               <button
                 type="submit"
-                className="w-full rounded-xl bg-violet-600 py-3 font-semibold text-white transition hover:bg-violet-500"
+                className="w-full rounded-xl bg-gradient-to-r from-violet-600 to-cyan-600 py-3 font-semibold text-white transition hover:opacity-90"
               >
-                Login
+                Create Account
               </button>
 
             </form>
 
             <div className="my-6 flex items-center">
+
               <div className="h-px flex-1 bg-slate-700" />
 
               <span className="px-4 text-sm text-slate-400">
@@ -100,6 +119,7 @@ export default function Login() {
               </span>
 
               <div className="h-px flex-1 bg-slate-700" />
+
             </div>
 
             <button className="flex w-full items-center justify-center gap-3 rounded-xl border border-slate-700 py-3 font-medium text-slate-200 transition hover:border-slate-500 hover:bg-slate-800/50">
@@ -114,22 +134,13 @@ export default function Login() {
 
             </button>
 
-            <div className="mt-6 text-center">
+            <div className="mt-6 text-center text-sm text-slate-400">
+              Already have an account?{" "}
               <a
-                href="#"
-                className="text-sm text-slate-400 transition hover:text-violet-400"
-              >
-                Forgot Password?
-              </a>
-            </div>
-
-            <div className="mt-4 text-center text-sm text-slate-400">
-              Don't have an account?{" "}
-              <a
-                href="/signup"
+                href="/login"
                 className="text-violet-400 transition hover:text-violet-300"
               >
-                Sign Up
+                Login
               </a>
             </div>
 
