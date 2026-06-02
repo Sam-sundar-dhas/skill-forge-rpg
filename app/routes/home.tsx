@@ -44,33 +44,33 @@ export default function Home() {
 
           {/* Navigation */}
           <nav className="hidden items-center gap-8 md:flex">
-            <a
-              href="#courses"
-              className="text-slate-300 transition hover:text-violet-400"
-            >
-              Courses
-            </a>
+            <Link
+           to="/courses"
+           className="text-slate-300 transition hover:text-violet-400"
+           >
+           Courses
+          </Link>
 
-            <a
-              href="#about"
-              className="text-slate-300 transition hover:text-violet-400"
+          <Link
+            to="/about"
+            className="text-slate-300 transition hover:text-violet-400"
             >
-              About Us
-            </a>
+            About Us
+            </Link>
 
-            <a
-              href="#bulletin"
+            <Link
+              to="/bulletins"
               className="text-slate-300 transition hover:text-violet-400"
             >
               Bulletin
-            </a>
+            </Link>
 
-            <a
-              href="#contact"
+            <Link
+              to="/contact"
               className="text-slate-300 transition hover:text-violet-400"
             >
               Contact
-            </a>
+            </Link>
           </nav>
 
           {/* Buttons */}
@@ -412,9 +412,9 @@ export default function Home() {
   </div>
 
   <div className="mt-10 text-center">
-    <button className="rounded-xl border border-slate-700 px-6 py-3 transition hover:border-yellow-500">
-      View All Bulletins
-    </button>
+   <Link to="/bulletins">
+  View All Bulletins
+</Link>
   </div>
 </section>
 {/* Skill Tree Preview */}

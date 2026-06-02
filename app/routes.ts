@@ -5,7 +5,7 @@ export default [
 
   route("/courses", "routes/courses.tsx"),
   route("/about", "routes/about.tsx"),
-  route("/blog", "routes/blog.tsx"),
+  route("/bulletins", "routes/bulletins.tsx"),
   route("/contact", "routes/contact.tsx"),
 
   route("/login", "routes/login.tsx"),

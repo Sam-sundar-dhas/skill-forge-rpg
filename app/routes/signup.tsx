@@ -1,4 +1,45 @@
+import { useState } from "react";
+import { supabase } from "~/lib/supabase";
 export default function Signup() {
+  const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+const [loading, setLoading] = useState(false);
+
+const handleSignup = async (
+  e: React.FormEvent<HTMLFormElement>
+) => {
+  e.preventDefault();
+
+  setLoading(true);
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
+
+  setLoading(false);
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+const { error: profileError } = await supabase
+  .from("profiles")
+  .insert({
+    id: data.user?.id,
+    email,
+    xp: 0,
+    level: 1,
+  });
+
+if (profileError) {
+  console.error(profileError);
+  alert(profileError.message);
+}
+
+  alert("Account created successfully!");
+};
   return (
     <main className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
 
@@ -69,46 +110,53 @@ export default function Signup() {
 
             </div>
 
-            <form className="mt-8 space-y-4">
+           <form onSubmit={handleSignup} className="mt-8 space-y-4">
 
-              <input
-                type="text"
-                placeholder="Full Name"
-                className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-violet-500"
-              />
+  <input
+    type="text"
+    placeholder="Full Name"
+    className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-violet-500"
+  />
 
-              <input
-                type="email"
-                placeholder="Email Address"
-                className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-violet-500"
-              />
+  <input
+    type="email"
+    placeholder="Email Address"
+    value={email}
+    onChange={(e) => setEmail(e.target.value)}
+    className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-violet-500"
+    required
+  />
 
-              <input
-                type="text"
-                placeholder="Username"
-                className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-violet-500"
-              />
+  <input
+    type="text"
+    placeholder="Username"
+    className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-violet-500"
+  />
 
-              <input
-                type="password"
-                placeholder="Password"
-                className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-violet-500"
-              />
+  <input
+    type="password"
+    placeholder="Password"
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+    className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-violet-500"
+    required
+  />
 
-              <input
-                type="password"
-                placeholder="Confirm Password"
-                className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-violet-500"
-              />
+  <input
+    type="password"
+    placeholder="Confirm Password"
+    className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-violet-500"
+  />
 
-              <button
-                type="submit"
-                className="w-full rounded-xl bg-gradient-to-r from-violet-600 to-cyan-600 py-3 font-semibold text-white transition hover:opacity-90"
-              >
-                Create Account
-              </button>
+  <button
+    type="submit"
+    disabled={loading}
+    className="w-full rounded-xl bg-gradient-to-r from-violet-600 to-cyan-600 py-3 font-semibold text-white transition hover:opacity-90 disabled:opacity-50"
+  >
+    {loading ? "Creating Account..." : "Create Account"}
+  </button>
 
-            </form>
+</form>
 
             <div className="my-6 flex items-center">
 
