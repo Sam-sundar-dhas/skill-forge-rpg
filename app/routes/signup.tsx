@@ -10,35 +10,77 @@ const handleSignup = async (
 ) => {
   e.preventDefault();
 
-  setLoading(true);
-
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-  });
-
-  setLoading(false);
-
-  if (error) {
-    alert(error.message);
+  if (!email || !password) {
+    alert("Please fill all fields");
     return;
   }
 
-const { error: profileError } = await supabase
-  .from("profiles")
-  .insert({
-    id: data.user?.id,
-    email,
-    xp: 0,
-    level: 1,
+  setLoading(true);
+
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (error) {
+      alert(error.message);
+      setLoading(false);
+      return;
+    }
+
+    const user = data.user;
+
+    if (!user) {
+      alert("Failed to create user");
+      setLoading(false);
+      return;
+    }
+
+    const { error: profileError } = await supabase
+      .from("profiles")
+      .insert({
+        id: user.id,
+        email: user.email,
+        xp: 0,
+        level: 1,
+      });
+
+    if (profileError) {
+      console.error(profileError);
+      alert(profileError.message);
+      setLoading(false);
+      return;
+    }
+
+    alert(
+      "Account created successfully! Redirecting to login..."
+      
+    );
+    console.log("Redirecting to login...");
+
+    setTimeout(() => {
+      window.location.href = "/login";
+    }, 2000);
+
+  } catch (err) {
+    console.error(err);
+    alert("Something went wrong");
+  }
+
+  setLoading(false);
+};
+const handleGoogleSignup = async () => {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: "http://localhost:5173/dashboard",
+    },
   });
 
-if (profileError) {
-  console.error(profileError);
-  alert(profileError.message);
-}
-
-  alert("Account created successfully!");
+  if (error) {
+    alert(error.message);
+  }
 };
   return (
     <main className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
@@ -169,18 +211,19 @@ if (profileError) {
               <div className="h-px flex-1 bg-slate-700" />
 
             </div>
+            <button
+  type="button"
+  onClick={handleGoogleSignup}
+  className="flex w-full items-center justify-center gap-3 rounded-xl border border-slate-700 py-3 font-medium text-slate-200 transition hover:border-slate-500 hover:bg-slate-800/50"
+>
+  <img
+    src="https://www.google.com/favicon.ico"
+    alt="Google"
+    className="h-5 w-5"
+  />
 
-            <button className="flex w-full items-center justify-center gap-3 rounded-xl border border-slate-700 py-3 font-medium text-slate-200 transition hover:border-slate-500 hover:bg-slate-800/50">
-
-              <img
-                src="https://www.google.com/favicon.ico"
-                alt="Google"
-                className="h-5 w-5"
-              />
-
-              Continue with Google
-
-            </button>
+  Continue with Google
+</button>
 
             <div className="mt-6 text-center text-sm text-slate-400">
               Already have an account?{" "}

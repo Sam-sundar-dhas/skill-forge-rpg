@@ -1,10 +1,52 @@
+import { useState } from "react";
+import { supabase } from "~/lib/supabase";
+
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+
+    setLoading(true);
+
+    const { error } =
+      await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+    setLoading(false);
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    window.location.href = "/dashboard";
+   
+  };
+  const handleGoogleLogin = async () => {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: "http://localhost:5173/dashboard",
+    },
+  });
+
+  if (error) {
+    alert(error.message);
+  }
+};
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
 
       {/* Background Glow */}
       <div className="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-violet-600/20 blur-3xl" />
-
       <div className="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-cyan-500/20 blur-3xl" />
 
       <div className="relative z-10 grid min-h-screen md:grid-cols-2">
@@ -31,7 +73,6 @@ export default function Login() {
               challenges.
             </p>
 
-            {/* Feature Cards */}
             <div className="mt-12 grid gap-4">
 
               <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 text-slate-200 backdrop-blur-sm">
@@ -69,25 +110,39 @@ export default function Login() {
 
             </div>
 
-            <form className="mt-8 space-y-4">
+            <form
+              onSubmit={handleLogin}
+              className="mt-8 space-y-4"
+            >
 
               <input
-                type="text"
-                placeholder="Email or Username"
+                type="email"
+                placeholder="Email Address"
+                value={email}
+                onChange={(e) =>
+                  setEmail(e.target.value)
+                }
                 className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-violet-500"
+                required
               />
 
               <input
                 type="password"
                 placeholder="Password"
+                value={password}
+                onChange={(e) =>
+                  setPassword(e.target.value)
+                }
                 className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-3 text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-violet-500"
+                required
               />
 
               <button
                 type="submit"
-                className="w-full rounded-xl bg-violet-600 py-3 font-semibold text-white transition hover:bg-violet-500"
+                disabled={loading}
+                className="w-full rounded-xl bg-violet-600 py-3 font-semibold text-white transition hover:bg-violet-500 disabled:opacity-50"
               >
-                Login
+                {loading ? "Logging in..." : "Login"}
               </button>
 
             </form>
@@ -101,18 +156,17 @@ export default function Login() {
 
               <div className="h-px flex-1 bg-slate-700" />
             </div>
-
-            <button className="flex w-full items-center justify-center gap-3 rounded-xl border border-slate-700 py-3 font-medium text-slate-200 transition hover:border-slate-500 hover:bg-slate-800/50">
-
-              <img
-                src="https://www.google.com/favicon.ico"
-                alt="Google"
-                className="h-5 w-5"
+            <button
+               type="button"
+               onClick={handleGoogleLogin}
+               className="flex w-full items-center justify-center gap-3 rounded-xl border border-slate-700 py-3 font-medium text-slate-200 transition hover:border-slate-500 hover:bg-slate-800/50"
+               >
+              <img src="https://www.google.com/favicon.ico"
+              alt="Google"
+              className="h-5 w-5"
               />
-
               Continue with Google
-
-            </button>
+              </button>
 
             <div className="mt-6 text-center">
               <a
